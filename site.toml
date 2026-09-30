@@ -1,0 +1,279 @@
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║  Bob & Berry — everything the website shows lives in this file.    ║
+# ╚════════════════════════════════════════════════════════════════════╝
+#
+#  After editing, rebuild:      python build.py
+#  Then upload the public/ folder again (see README.md).
+#
+#  Rules of thumb
+#   • Text that differs by language is written   { en = "…", he = "…" }
+#   • To hide an optional field, delete the line or leave it empty ("").
+#     Empty optional fields disappear from the page — nothing is shown
+#     as "unknown".
+#   • Phone numbers go in international format, e.g. "+972-54-3123061".
+#   • NEVER change a dog's `slug` after the NFC tags are written:
+#     it is the permanent collar address (/bob/ and /berry/).
+#   • Only publish what you are happy for any stranger to read.
+#     No street address, no full microchip number.
+
+
+# ─── Site ──────────────────────────────────────────────────────────────
+[site]
+# The permanent public address, WITHOUT a trailing slash,
+# e.g. "https://bobandberry.com" or "https://bob-and-berry.pages.dev".
+# Leave empty until the site is live on its lasting address. Once it is
+# set, `python build.py` also writes nfc-kit/ with the exact collar URLs
+# and printable QR codes.
+base_url = "https://rockshepherd1409.github.io/bob-and-berry"
+name = { en = "Bob & Berry", he = "בוב וברי" }
+
+
+# ─── Owner (main contact) ──────────────────────────────────────────────
+[owner]
+name          = { en = "Roy Even", he = "רועי אבן" }
+short_name    = { en = "Roy", he = "רועי" }   # used on buttons: "Call Roy"
+gender        = "m"                         # m | f — only used for Hebrew grammar
+phone         = "+972-54-3123061"           # REQUIRED — Call and SMS buttons
+phone_display = "054-312-3061"              # how the number is written on the page
+whatsapp      = "+972-54-3123061"           # empty → WhatsApp buttons are hidden
+email         = "roy3v3n@gmail.com"         # empty → hidden
+home_area     = { en = "Holon", he = "חולון" }  # city only, never a street address
+
+
+# ─── Backup contact (optional) ─────────────────────────────────────────
+# Delete this whole section to hide it.
+[backup]
+name          = { en = "Yana Grischenko", he = "יאנה גרישצ'נקו" }
+short_name    = { en = "Yana", he = "יאנה" }
+gender        = "f"
+phone         = "+972-52-475-5641"
+phone_display = "052-475-5641"
+whatsapp      = ""                          # add the number if Yana is reachable on WhatsApp
+email         = "yanagrishchenko.yg@gmail.com"
+
+
+# ─── Dogs ──────────────────────────────────────────────────────────────
+# Each [[dogs]] block is one dog page. Photos: put the original files in
+# photos/<slug>/ and list them below; the FIRST photo is the main
+# portrait. 4–5 photos per dog work best. The build resizes them and
+# strips all hidden metadata (including GPS location).
+#
+# `focus` (optional) = the part of the photo to keep visible when it is
+# cropped into a square-ish frame: "horizontal% vertical%".
+
+[[dogs]]
+slug      = "bob"                            # collar URL → /bob/  (never change)
+name      = { en = "Bob", he = "בוב" }
+sex       = "male"                           # male | female
+accent    = "#A15B1C"                        # this dog's small colour accent
+born      = "2022-03-22"                     # YYYY-MM-DD — age is calculated automatically
+breed     = { en = "Labrador mix", he = "מעורב לברדור" }
+size      = { en = "Large", he = "גדול" }
+weight_kg = 34
+coat      = { en = "Brown", he = "חום" }
+markings  = { en = "", he = "" }             # distinctive marks that tell Bob apart
+temperament  = { en = "Friendly and approachable.", he = "ידידותי ואפשר לגשת אליו." }
+with_dogs    = { en = "Gets along with other dogs.", he = "מסתדר עם כלבים אחרים." }
+with_animals = { en = "Not comfortable around other animals.", he = "לא מרגיש בנוח ליד בעלי חיים אחרים." }
+medical      = { en = "", he = "" }          # medication or conditions a finder must know
+# Owner-confirmed alerts — shown right under the contact buttons.
+alerts = [
+  { en = "Scared of loud sounds, electric motors and similar noises.", he = "מפחד מרעשים חזקים, ממנועים חשמליים ומרעשים דומים." },
+]
+
+  [[dogs.photos]]
+  file  = "bob/sitting.jpg"
+  alt   = { en = "Bob sitting on a tiled floor, looking up at the camera", he = "בוב יושב על רצפת אריחים ומביט למעלה אל המצלמה" }
+  focus = "50% 52%"
+
+  [[dogs.photos]]
+  file  = "bob/sofa.jpg"
+  alt   = { en = "Bob lying on a blue sofa, looking back over his shoulder", he = "בוב שוכב על ספה כחולה ומביט לאחור מעבר לכתף" }
+  focus = "30% 30%"
+
+  [[dogs.photos]]
+  file  = "bob/resting.jpg"
+  alt   = { en = "Bob resting his head on the floor next to a sofa", he = "בוב מניח את הראש על הרצפה ליד ספה" }
+  focus = "30% 50%"
+
+  [[dogs.photos]]
+  file  = "bob/hallway.jpg"
+  alt   = { en = "Bob sitting on a grey rug in a hallway, seen from behind", he = "בוב יושב על שטיח אפור במסדרון, מצולם מאחור" }
+  focus = "45% 50%"
+
+
+[[dogs]]
+slug      = "berry"                          # collar URL → /berry/  (never change)
+name      = { en = "Berry", he = "ברי" }
+sex       = "female"
+accent    = "#9A3E65"
+born      = "2022-03-22"
+breed     = { en = "Canaan dog mix", he = "מעורבת כנעני" }
+size      = { en = "Large", he = "גדולה" }
+weight_kg = 24
+coat      = { en = "Brown", he = "חום" }
+markings  = { en = "", he = "" }
+temperament  = { en = "Friendly and approachable.", he = "ידידותית ואפשר לגשת אליה." }
+with_dogs    = { en = "Picky with other dogs.", he = "בררנית עם כלבים אחרים." }
+with_animals = { en = "Not comfortable around other animals.", he = "לא מרגישה בנוח ליד בעלי חיים אחרים." }
+medical      = { en = "", he = "" }
+alerts = [
+  { en = "Will try to run away if she gets scared — please approach slowly and calmly.", he = "אם תיבהל היא תנסה לברוח — בבקשה גשו אליה לאט וברוגע." },
+  { en = "Knows how to open doors, so a closed door may not keep her in.", he = "יודעת לפתוח דלתות, כך שדלת סגורה לא בהכרח תשאיר אותה בפנים." },
+]
+
+  [[dogs.photos]]
+  file  = "berry/rug.jpg"
+  alt   = { en = "Berry lying on a rug with her front legs stretched out, looking at the camera", he = "ברי שוכבת על שטיח עם הרגליים הקדמיות מתוחות ומביטה אל המצלמה" }
+  focus = "40% 42%"
+
+  [[dogs.photos]]
+  file  = "berry/living-room.jpg"
+  alt   = { en = "Berry sitting in a living room with her tongue out", he = "ברי יושבת בסלון עם הלשון בחוץ" }
+  focus = "60% 48%"
+
+  [[dogs.photos]]
+  file  = "berry/blanket.jpg"
+  alt   = { en = "Close-up of Berry's face resting on a yellow blanket", he = "תקריב של הפנים של ברי על שמיכה צהובה" }
+  focus = "42% 50%"
+
+  [[dogs.photos]]
+  file  = "berry/sofa.jpg"
+  alt   = { en = "Berry sitting upright on a blue sofa", he = "ברי יושבת זקופה על ספה כחולה" }
+  focus = "50% 62%"
+
+
+# ─── Interface wording ─────────────────────────────────────────────────
+# You rarely need to touch this. Placeholders in {braces} are filled in
+# automatically:
+#   {name}  the dog (or "Bob and Berry" on the homepage)
+#   {to}    the person being contacted, e.g. Roy
+#   {owner} the owner's short name
+#   {n} {m} {i} {total} {date} {url} {place} {items}  numbers / values
+# Hebrew variants: `he_f` is used instead of `he` when the subject is
+# female (the dog in dog sentences; the contact person in messages).
+
+[ui]
+page_title      = { en = "{name} — help me get home", he = "{name} — עזרו לי לחזור הביתה" }
+language        = { en = "Language", he = "שפה" }
+home_link       = { en = "Bob & Berry home", he = "לעמוד הבית של בוב וברי" }
+more_pages      = { en = "More pages", he = "עמודים נוספים" }
+eyebrow         = { en = "Help me get home", he = "עזרו לי לחזור הביתה" }
+greeting        = { en = "Hi, I'm {name}", he = "היי, אני {name}" }
+found_q         = { en = "Found me on my own?", he = "מצאתם אותי לבד?" }
+found_a         = { en = "Please contact my owner.", he = "בבקשה צרו קשר עם הבעלים שלי." }
+thanks          = { en = "Thank you for helping me get home.", he = "תודה שאתם עוזרים לי לחזור הביתה." }
+owner_label     = { en = "My owner", he = "הבעלים שלי" }
+
+call            = { en = "Call {to}", he = "התקשרו ל{to}" }
+whatsapp        = { en = "WhatsApp {to}", he = "שלחו הודעה ל{to} בוואטסאפ" }
+whatsapp_short  = { en = "WhatsApp {to}", he = "וואטסאפ ל{to}" }
+sms             = { en = "SMS {to}", he = "SMS ל{to}" }
+email           = { en = "Email {to}", he = "מייל ל{to}" }
+copy_number     = { en = "Copy number", he = "העתקת המספר" }
+copied          = { en = "Number copied.", he = "המספר הועתק." }
+copy_failed     = { en = "Couldn't copy automatically. The number is now selected — press and hold it to copy.", he = "ההעתקה האוטומטית לא הצליחה. המספר מסומן עכשיו — לחצו עליו לחיצה ארוכה כדי להעתיק." }
+share_location  = { en = "Share your location", he = "שיתוף המיקום שלכם" }
+more_contacts   = { en = "More contacts", he = "אנשי קשר נוספים" }
+quick_contact   = { en = "Quick contact", he = "יצירת קשר מהירה" }
+
+# Messages the finder can edit before sending (WhatsApp / SMS / email)
+msg_found       = { en = "Hi {to}, I found {name}.", he = "היי {to}, מצאתי את {name}." }
+msg_where_blank = { en = "I'm at [type your location].", he = "המיקום שלי: [כתבו כאן איפה אתם]." }
+msg_contact_me  = { en = "Please contact me.", he = "בבקשה צור איתי קשר.", he_f = "בבקשה צרי איתי קשר." }
+msg_map         = { en = "My location on the map: {url}", he = "המיקום שלי במפה: {url}" }
+msg_accuracy    = { en = "(accurate to about {m} m)", he = "(דיוק של כ־{m} מטר)" }
+msg_place       = { en = "I'm near: {place}", he = "אני ליד: {place}" }
+email_subject   = { en = "I found {name}", he = "מצאתי את {name}" }
+
+alerts_title    = { en = "Important to know", he = "חשוב לדעת" }
+
+steps_title     = { en = "What to do if you found me", he = "מה לעשות אם מצאתם אותי" }
+step_contact    = { en = "Call {owner} or send a WhatsApp message using the buttons on this page.", he = "התקשרו ל{owner} או שלחו הודעת וואטסאפ בעזרת הכפתורים בעמוד." }
+step_call_only  = { en = "Call {owner} using the button on this page.", he = "התקשרו ל{owner} בעזרת הכפתור בעמוד." }
+step_where      = { en = "Tell {owner} where you are: share your location, or mention a street or landmark nearby.", he = "ספרו ל{owner} איפה אתם: שתפו מיקום, או ציינו רחוב או ציון דרך קרוב." }
+step_calm       = { en = "Please stay calm and don't chase me. Don't take any risks, especially near roads.", he = "הישארו רגועים ואל תרדפו אחריי. אל תיקחו סיכונים, במיוחד ליד כבישים." }
+step_backup     = { en = "If {owner} doesn't answer, try {backup}, our backup contact.", he = "אם {owner} לא עונה, נסו את {backup}, איש הקשר הנוסף שלנו." }
+
+gallery_title   = { en = "Photos of {name}", he = "תמונות של {name}" }
+gallery_hint    = { en = "Tap a photo to see it larger.", he = "הקישו על תמונה כדי להגדיל אותה." }
+photo_open      = { en = "Open larger photo {i} of {total}", he = "פתיחת תמונה {i} מתוך {total} בגדול" }
+photo_counter   = { en = "{i} of {total}", he = "{i} מתוך {total}" }
+photo_prev      = { en = "Previous", he = "הקודמת" }
+photo_next      = { en = "Next", he = "הבאה" }
+photo_prev_long = { en = "Previous photo", he = "התמונה הקודמת" }
+photo_next_long = { en = "Next photo", he = "התמונה הבאה" }
+photo_missing   = { en = "Photo unavailable", he = "התמונה לא זמינה" }
+close           = { en = "Close", he = "סגירה" }
+
+about_title     = { en = "About {name}", he = "קצת על {name}" }
+f_breed         = { en = "Breed", he = "גזע" }
+f_sex           = { en = "Sex", he = "מין" }
+f_age           = { en = "Age", he = "גיל" }
+f_size          = { en = "Size", he = "גודל" }
+f_weight        = { en = "Weight", he = "משקל" }
+f_coat          = { en = "Coat colour", he = "צבע פרווה" }
+f_markings      = { en = "Markings", he = "סימנים מזהים" }
+f_temperament   = { en = "Temperament", he = "אופי" }
+f_dogs          = { en = "With other dogs", he = "עם כלבים אחרים" }
+f_animals       = { en = "With other animals", he = "עם בעלי חיים אחרים" }
+f_medical       = { en = "Medical", he = "רפואי" }
+f_home          = { en = "Home area", he = "אזור מגורים" }
+male            = { en = "Male", he = "זכר" }
+female          = { en = "Female", he = "נקבה" }
+weight_value    = { en = "About {n} kg", he = "כ־{n} ק״ג" }
+age_1           = { en = "1 year old", he = "בן שנה", he_f = "בת שנה" }
+age_2           = { en = "2 years old", he = "בן שנתיים", he_f = "בת שנתיים" }
+age_n           = { en = "{n} years old", he = "בן {n}", he_f = "בת {n}" }
+born_on         = { en = "born {date}", he = "נולד ב־{date}", he_f = "נולדה ב־{date}" }
+
+contacts_title  = { en = "Contact", he = "יצירת קשר" }
+role_owner      = { en = "Owner", he = "הבעלים" }
+role_backup     = { en = "Backup contact", he = "איש קשר נוסף" }
+btn_call        = { en = "Call", he = "התקשרו" }
+btn_whatsapp    = { en = "WhatsApp", he = "וואטסאפ" }
+btn_sms         = { en = "SMS", he = "SMS" }
+btn_email       = { en = "Email", he = "מייל" }
+btn_copy        = { en = "Copy", he = "העתקה" }
+
+other_dog       = { en = "Also meet {name}", he = "הכירו גם את {name}" }
+privacy_note    = { en = "This page has no tracking or ads. Your location is shared only if you choose to send it yourself.", he = "בעמוד הזה אין מעקב או פרסומות. המיקום שלכם משותף רק אם תבחרו לשלוח אותו בעצמכם." }
+
+# Location sheet
+loc_title       = { en = "Share your location with {owner}", he = "שיתוף המיקום שלכם עם {owner}" }
+loc_intro       = { en = "Your phone will ask for permission. A map link is added to a message that you can check and edit, and then send yourself. Your location is not sent to this website.", he = "הטלפון יבקש אישור. קישור למפה יתווסף להודעה שתוכלו לבדוק ולערוך, ואז לשלוח בעצמכם. המיקום לא נשלח לאתר הזה." }
+loc_get         = { en = "Add my current location", he = "הוספת המיקום הנוכחי שלי" }
+loc_again       = { en = "Update my location", he = "עדכון המיקום" }
+loc_finding     = { en = "Finding your location…", he = "מאתרים את המיקום שלכם…" }
+loc_ok          = { en = "Your location was added to the message below.", he = "המיקום נוסף להודעה למטה." }
+loc_rough       = { en = "Your location may be off by about {m} m. Please add a street name or landmark too.", he = "ייתכן שהמיקום לא מדויק (עד כ־{m} מטר). כדאי להוסיף גם שם רחוב או ציון דרך." }
+loc_denied      = { en = "Location access is blocked. You can type where you are instead, or simply call.", he = "הגישה למיקום חסומה. אפשר לכתוב איפה אתם במקום, או פשוט להתקשר." }
+loc_unavailable = { en = "Your location couldn't be found right now. Please type where you are.", he = "לא הצלחנו למצוא את המיקום כרגע. כתבו בבקשה איפה אתם." }
+loc_timeout     = { en = "Finding your location took too long. Try again, or type where you are.", he = "איתור המיקום לקח יותר מדי זמן. נסו שוב, או כתבו איפה אתם." }
+loc_unsupported = { en = "This browser can't share your location. Please type where you are.", he = "הדפדפן הזה לא יכול לשתף מיקום. כתבו בבקשה איפה אתם." }
+loc_place_label = { en = "Street, landmark or place (optional)", he = "רחוב, ציון דרך או מקום (לא חובה)" }
+loc_place_hint  = { en = "e.g. next to the bus stop on …", he = "למשל: ליד תחנת האוטובוס ברחוב…" }
+loc_msg_label   = { en = "Your message — you can edit it", he = "ההודעה שלכם — אפשר לערוך אותה" }
+loc_reset       = { en = "Start the message again", he = "התחלת ההודעה מחדש" }
+loc_send_wa     = { en = "Open in WhatsApp", he = "פתיחה בוואטסאפ" }
+loc_send_sms    = { en = "Open as SMS", he = "פתיחה כהודעת SMS" }
+loc_copy        = { en = "Copy message", he = "העתקת ההודעה" }
+loc_copied      = { en = "Message copied.", he = "ההודעה הועתקה." }
+loc_note        = { en = "Nothing is sent until you press Send in WhatsApp or Messages.", he = "שום דבר לא נשלח עד שתלחצו על ״שליחה״ בוואטסאפ או בהודעות." }
+
+# Homepage
+home_eyebrow    = { en = "Help us get home", he = "עזרו לנו לחזור הביתה" }
+home_found_q    = { en = "Found one of us, or both?", he = "מצאתם אחד מאיתנו, או את שנינו?" }
+home_found_a    = { en = "Please contact our owner, {owner}.", he = "בבקשה צרו קשר עם {owner}, הבעלים שלנו." }
+home_thanks     = { en = "Thank you for helping us get home.", he = "תודה שאתם עוזרים לנו לחזור הביתה." }
+home_who        = { en = "Who did you find?", he = "את מי מצאתם?" }
+home_card_link  = { en = "{name}'s page", he = "העמוד של {name}" }
+and_joiner      = { en = "and", he = "ואת" }       # "Bob and Berry" / "בוב ואת ברי"
+
+# Not-found page
+nf_title        = { en = "This page doesn't exist", he = "העמוד הזה לא קיים" }
+nf_text         = { en = "Found one of our dogs? You can still contact {owner} right away:", he = "מצאתם אחד מהכלבים שלנו? אפשר ליצור קשר עם {owner} מיד:" }
+
+# Shown only while something essential is missing from this file
+preview_banner  = { en = "Preview — not ready for collar use. Missing: {items}", he = "תצוגה מקדימה — עדיין לא מוכן לשימוש בקולר. חסר: {items}" }
+missing_phone   = { en = "Phone number not set yet", he = "מספר הטלפון עוד לא הוגדר" }

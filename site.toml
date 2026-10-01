@@ -24,7 +24,7 @@
 # Leave empty until the site is live on its lasting address. Once it is
 # set, `python build.py` also writes nfc-kit/ with the exact collar URLs
 # and printable QR codes.
-base_url = "https://rockshepherd1409.github.io/bob-and-berry"
+base_url = "https://bob-and-berry.vercel.app"
 name = { en = "Bob & Berry", he = "בוב וברי" }
 
 
@@ -112,7 +112,7 @@ breed     = { en = "Canaan dog mix", he = "כנענית מעורבת" }
 size      = { en = "Large", he = "גדולה" }
 weight_kg = 24
 coat      = { en = "Brown", he = "חום" }
-markings  = { en = "", he = "" }
+markings  = { en = "White “socks” (white paws)", he = "כפות לבנות (״גרביים״ לבנים)" }
 temperament  = { en = "Friendly and approachable.", he = "ידידותית ואפשר לגשת אליה." }
 with_dogs    = { en = "Picky with other dogs.", he = "בררנית עם כלבים אחרים." }
 with_animals = { en = "Not comfortable around other animals.", he = "לא מרגישה בנוח ליד בעלי חיים אחרים." }

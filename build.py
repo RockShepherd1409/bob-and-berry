@@ -238,7 +238,6 @@ def load_config(rep):
         "ui": ui,
         "name": pair(site.get("name")) or {"en": "Bob & Berry", "he": "בוב וברי"},
         "base_url": base,
-        "base_path": (urlparse(base).path.rstrip("/") + "/") if base else "/",
         "owner": contact(cfg.get("owner"), "owner", rep, required=True),
         "backup": contact(cfg.get("backup"), "backup", rep, required=False),
         "dogs": [],
@@ -779,7 +778,12 @@ def all_names(pg):
 
 
 def home_page(model, assets, not_found=False):
-    prefix = model["base_path"] if not_found else ""
+    # The 404 page is served at any unknown address, so relative links can't
+    # work there. Point it at the permanent address so it works on every host.
+    if not_found:
+        prefix = model["base_url"] + "/" if model["base_url"] else "/"
+    else:
+        prefix = ""
     pg = Page(model, prefix)
     u, o = pg.u, model["owner"]
     names = all_names(pg)

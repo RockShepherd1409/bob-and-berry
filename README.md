@@ -16,7 +16,8 @@ no tracking.
 site.toml      ← THE ONE FILE TO EDIT: contacts, dog details, photos, all wording (EN + HE)
 photos/        ← original photos (not published directly)
 build.py       ← turns site.toml + photos into the website
-public/        ← the finished website — this folder is what you upload
+public/        ← the finished website — this folder is what gets published
+vercel.json    ← Vercel settings (serve public/, redirects, no-index headers)
 nfc-kit/       ← appears once base_url is set: exact tag URLs + printable QR codes
 src/           ← stylesheet and script (only for design changes)
 tools/qr.py    ← QR code generator used by the build
@@ -28,7 +29,8 @@ Requirements: Python 3.11+ and Pillow (`python -m pip install pillow`, once).
 
 1. Edit `site.toml` (any text editor — keep the quotes and braces).
 2. Run `python build.py`. It checks everything and prints what is missing.
-3. Upload `public/` again (see *Publishing*). The collar URLs never change.
+3. Commit and push to GitHub — Vercel and GitHub Pages update within a minute
+   (see *Publishing*). The collar URLs never change.
 
 To preview locally: `python -m http.server 8000 --directory public`, then open
 <http://localhost:8000/bob/>.
@@ -53,28 +55,28 @@ including GPS location.
 
 ## Publishing (stable public URLs)
 
-Any static host works. Recommended: **Cloudflare Pages** (free, HTTPS,
-drag-and-drop, honours the `_headers` file).
+The site lives in the GitHub repository `RockShepherd1409/bob-and-berry` and is
+served from two places. **Every push to `main` updates both automatically:**
 
-1. Create a free Cloudflare account → *Workers & Pages* → *Create* → *Pages* →
-   *Upload assets*.
-2. Project name `bob-and-berry` (the name becomes the address) → upload the
-   `public` folder → *Deploy*. The site is now at
-   `https://bob-and-berry.pages.dev/` (or the name you chose).
-3. To update later: open the project → *Create new deployment* → upload `public`
-   again. The production address stays the same.
-   ⚠ Each deployment also gets a one-off preview address like
-   `https://1a2b3c.bob-and-berry.pages.dev` — **never** write those to a tag.
-4. Optional but recommended for the long term: a custom domain (≈ $10/year from
-   any registrar) added under *Custom domains*. It lets you move hosts later
-   without changing the collar URLs. Decide this **before** writing the tags.
+| Host | Address | Set up by |
+|------|---------|-----------|
+| **Vercel** (primary — on the tags) | `https://bob-and-berry.vercel.app/` | Vercel project `bob-and-berry`, connected to the repo; settings in `vercel.json` |
+| GitHub Pages (mirror) | `https://rockshepherd1409.github.io/bob-and-berry/` | `.github/workflows/pages.yml` |
 
-Alternative — **GitHub Pages**: push this folder to a GitHub repository, then
-*Settings → Pages → Source: GitHub Actions*. The included workflow
-`.github/workflows/pages.yml` publishes `public/` on every push. The address will
-be `https://<username>.github.io/<repo>/`.
+So the update routine is: edit `site.toml` → `python build.py` → commit → push.
 
-Don't enable any analytics on the host — the page promises no tracking.
+Keep the addresses permanent:
+
+- Don't rename or delete the Vercel project, the GitHub repository, or the
+  GitHub account — the addresses depend on those names.
+- Vercel also creates one-off addresses for every deployment
+  (`bob-and-berry-xxxx-….vercel.app`). **Never** write those to a tag.
+- The only address that survives switching hosts is your own domain
+  (e.g. `bobandberry.co.il`, added under the Vercel project's *Domains*). If you
+  add one later, keep the old addresses working and rewrite the tags only when
+  convenient.
+
+Don't enable Vercel Analytics or any other tracking — the page promises none.
 
 ## Writing the NFC tags
 

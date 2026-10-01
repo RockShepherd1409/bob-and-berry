@@ -177,7 +177,9 @@ button { font: inherit; }
   -webkit-user-select: all; user-select: all;
 }
 
-.more-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr)); gap: 10px; margin-top: 6px; }
+/* at most two per row (one when text is enlarged); a leftover last button spans the row */
+.more-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, max(9.5em, calc(50% - 5px))), 1fr)); gap: 10px; margin-top: 6px; }
+.more-actions > :last-child:nth-child(odd) { grid-column: 1 / -1; }
 
 /* ---------- sections & cards ---------- */
 .section { margin-top: 30px; }

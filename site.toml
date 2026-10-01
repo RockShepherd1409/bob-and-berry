@@ -48,7 +48,7 @@ short_name    = { en = "Yana", he = "יאנה" }
 gender        = "f"
 phone         = "+972-52-475-5641"
 phone_display = "052-475-5641"
-whatsapp      = ""                          # add the number if Yana is reachable on WhatsApp
+whatsapp      = "+972-52-475-5641"          # empty → her WhatsApp buttons become SMS
 email         = "yanagrishchenko.yg@gmail.com"
 
 

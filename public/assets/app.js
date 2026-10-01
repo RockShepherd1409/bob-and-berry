@@ -3,11 +3,9 @@
  * Everything essential already works without this file: calling, WhatsApp,
  * SMS and email are plain links in the HTML, and the photos open as
  * normal images. This script adds: the in-place language switch, copy
- * buttons, the photo lightbox, and the "share your location" sheet.
+ * buttons and the photo lightbox.
  *
- * Privacy: nothing here talks to a server. The finder's location is only
- * read after they tap the button, and it only ever goes into a message
- * they review and send themselves.
+ * Privacy: nothing here talks to a server or reads the visitor's location.
  */
 (function () {
   'use strict';
@@ -23,9 +21,6 @@
     if (vars) for (var k in vars) s = s.split('{' + k + '}').join(vars[k]);
     return s;
   }
-  function lang() { return H.lang === 'he' ? 'he' : 'en'; }
-  var page = {};
-  try { page = JSON.parse($('#bb-page').textContent); } catch (e) { /* optional */ }
 
   /* ------------------------------------------------ status toast */
   var toast = $('#bb-toast'), toastTimer;
@@ -214,132 +209,6 @@
     });
     stage.addEventListener('pointercancel', function () { sx = null; });
     document.addEventListener('bb:lang', function () { if (lb.open) render(); });
-  }
-
-  /* ------------------------------------------------ share location */
-  var sheet = $('#bb-locate');
-  var openers = $$('[data-open-locate]');
-  if (sheet && openers.length && canDialog && page.contact) {
-    var getBtn = $('#loc-get'), getLabel = $('#loc-get-label');
-    var status = $('#loc-status');
-    var place = $('#loc-place');
-    var msg = $('#loc-msg');
-    var reset = $('#loc-reset');
-    var waLink = $('#loc-wa'), smsLink = $('#loc-sms'), copyBtn = $('#loc-copy');
-    var coords = null, state = '', edited = false, watchdog = null, requestId = 0;
-    var openSheet = modal(sheet);
-
-    var names = function () { return page.names[lang()]; };
-    var compose = function () {
-      var c = page.contact, l = lang();
-      var lines = [t('msg_found', { to: c.short[l], name: names() })];
-      var p = place.value.trim();
-      if (coords) {
-        var line = t('msg_map', { url: coords.url });
-        if (coords.acc) line += ' ' + t('msg_accuracy', { m: coords.acc });
-        lines.push(line);
-      }
-      if (p) lines.push(t('msg_place', { place: p }));
-      if (!coords && !p) lines.push(t('msg_where_blank'));
-      lines.push(c.contactMe[l]);
-      return lines.join('\n');
-    };
-    var updateLinks = function () {
-      var text = msg.value;
-      var enc = encodeURIComponent(text);
-      if (waLink) waLink.href = 'https://wa.me/' + page.contact.wa + '?text=' + enc;
-      smsLink.href = 'sms:' + page.contact.sms + '?&body=' + enc;
-      reset.hidden = !edited;
-    };
-    var refresh = function () {
-      if (!edited) msg.value = compose();
-      updateLinks();
-    };
-    var setStatus = function (key, tone, vars) {
-      state = key;
-      status.setAttribute('data-tone', tone || '');
-      status.textContent = key ? t(key, vars) : '';
-      getLabel.textContent = t(coords ? 'loc_again' : 'loc_get');
-    };
-    var geoError = function (code) {
-      getBtn.disabled = false;
-      setStatus(code === 1 ? 'loc_denied' : code === 3 ? 'loc_timeout' : 'loc_unavailable', 'warn');
-      place.focus();
-    };
-
-    var MAP_URL = /https:\/\/www\.google\.com\/maps\/search\/\?api=1&query=[-0-9.,]+/;
-    var unsupported = function () {
-      getBtn.disabled = false;
-      setStatus('loc_unsupported', 'warn');
-      place.focus();
-    };
-
-    getBtn.addEventListener('click', function () {
-      var geo = navigator.geolocation;
-      if (!geo || typeof geo.getCurrentPosition !== 'function' || !window.isSecureContext) return unsupported();
-      var id = ++requestId;
-      getBtn.disabled = true;
-      setStatus('loc_finding', '');
-      clearTimeout(watchdog);
-      // Some browsers never answer if the permission prompt is ignored.
-      watchdog = setTimeout(function () { if (id === requestId && getBtn.disabled) geoError(3); }, 25000);
-      try {
-        geo.getCurrentPosition(function (pos) {
-          if (id !== requestId) return;
-          clearTimeout(watchdog);
-          getBtn.disabled = false;
-          var lat = pos.coords.latitude.toFixed(5), lng = pos.coords.longitude.toFixed(5);
-          var acc = Math.round(pos.coords.accuracy || 0);
-          coords = {
-            url: 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng,
-            acc: acc
-          };
-          if (edited) {
-            // Keep the finder's own wording: update the map link if it is
-            // already in their text, otherwise add it on a new line.
-            var line = t('msg_map', { url: coords.url }) + (acc ? ' ' + t('msg_accuracy', { m: acc }) : '');
-            msg.value = MAP_URL.test(msg.value) ? msg.value.replace(MAP_URL, coords.url)
-                                               : msg.value.replace(/\s*$/, '') + '\n' + line;
-          }
-          if (acc > 100) setStatus('loc_rough', 'warn', { m: acc });
-          else setStatus('loc_ok', 'ok');
-          refresh();
-        }, function (err) {
-          if (id !== requestId) return;
-          clearTimeout(watchdog);
-          geoError(err && err.code);
-        }, { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 });
-      } catch (e) {
-        clearTimeout(watchdog);
-        unsupported();
-      }
-    });
-
-    place.addEventListener('input', refresh);
-    msg.addEventListener('input', function () { edited = true; updateLinks(); });
-    reset.addEventListener('click', function () { edited = false; refresh(); msg.focus(); });
-    copyBtn.addEventListener('click', function () {
-      copyText(msg.value).then(function () { say(t('loc_copied')); }, function () {
-        msg.focus();
-        msg.select();
-        say(t('copy_failed'));
-      });
-    });
-
-    openers.forEach(function (b) {
-      b.hidden = false;
-      b.addEventListener('click', function () {
-        refresh();
-        openSheet(getBtn, b);
-      });
-    });
-    $$('[data-close]', sheet).forEach(function (b) { b.addEventListener('click', function () { sheet.close(); }); });
-    sheet.addEventListener('click', function (e) { if (e.target === sheet) sheet.close(); });
-    document.addEventListener('bb:lang', function () {
-      if (state) setStatus(state, status.getAttribute('data-tone'), coords && coords.acc ? { m: coords.acc } : null);
-      else getLabel.textContent = t('loc_get');
-      refresh();
-    });
   }
 
   /* ------------------------------------------------ keep bottom padding = bar height */

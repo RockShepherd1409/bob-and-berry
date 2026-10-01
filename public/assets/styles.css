@@ -174,7 +174,6 @@ button { font: inherit; }
 .copy-btn:hover { background: var(--teal-soft); }
 
 .more-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr)); gap: 10px; margin-top: 6px; }
-.more-actions .span-2 { grid-column: 1 / -1; }
 
 /* ---------- sections & cards ---------- */
 .section { margin-top: 30px; }
@@ -242,9 +241,10 @@ button { font: inherit; }
 [lang="he"] .person .role { text-transform: none; letter-spacing: 0; font-size: .9rem; }
 .person .num-line { margin: 4px 0 12px; font-size: 1.05rem; }
 .person .num-line span { display: block; }
+[dir="rtl"] .person .num-line .ltr { text-align: right; } /* numbers stay LTR but line up with the Hebrew text */
 .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.5em), 1fr)); gap: 8px; }
 .contact-grid .btn { min-height: 48px; font-size: .98rem; padding: 8px 12px; }
-.email-line { margin-top: 10px; font-size: .95rem; word-break: break-all; }
+.email-line { margin-top: 12px; font-size: .95rem; text-align: center; overflow-wrap: anywhere; }
 
 /* ---------- homepage ---------- */
 .home-hero { display: grid; gap: 12px; margin-top: 8px; }
@@ -351,42 +351,6 @@ dialog::backdrop { background: rgba(18, 22, 20, .6); }
 .lb-btn:hover { background: rgba(255, 255, 255, .2); }
 .lb-btn .icon { width: 1.3em; height: 1.3em; }
 
-/* location sheet */
-.sheet {
-  border: 0; padding: 0; width: 100%; max-width: 560px; max-height: 92vh; max-height: 92svh;
-  margin: auto auto 0; border-radius: 24px 24px 0 0; background: var(--surface);
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, .2); overflow: auto; overscroll-behavior: contain;
-}
-@media (min-width: 640px) { .sheet { margin: auto; border-radius: 24px; } }
-.sheet-inner {
-  display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px;
-  padding: 20px max(20px, env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left));
-}
-.sheet-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 8px 12px; }
-.sheet-head .icon-btn { margin-inline-start: auto; }
-.sheet-head h2 { font-size: 1.35rem; padding-top: 6px; }
-.icon-btn {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; min-width: 44px; padding: 0 12px;
-  background: #f1ede7; border: 0; border-radius: 999px; color: var(--ink); font-weight: 650; cursor: pointer; flex: none;
-}
-.field { display: grid; gap: 6px; }
-.field label { font-weight: 650; }
-.field input, .field textarea {
-  width: 100%; min-width: 0; font: inherit; font-size: 1.05rem; color: var(--ink); background: #fff;
-  border: 1.5px solid #cfc6b8; border-radius: 12px; padding: 12px 14px; min-height: 48px;
-}
-.field textarea { min-height: 8.5em; resize: vertical; line-height: 1.45; }
-.field input:focus, .field textarea:focus { border-color: var(--teal); outline: 3px solid rgba(43, 106, 98, .25); outline-offset: 0; }
-.loc-status { border-radius: 12px; padding: 0; font-weight: 600; }
-.loc-status:not(:empty) { padding: 10px 14px; background: #f1ede7; }
-.loc-status[data-tone="ok"] { background: var(--teal-soft); color: var(--teal-ink); }
-.loc-status[data-tone="warn"] { background: var(--warm-soft); color: var(--warm-ink); }
-.sheet-actions { display: grid; gap: 10px; }
-.text-btn {
-  justify-self: start; background: none; border: 0; padding: 8px 2px; min-height: 44px; color: var(--teal-ink);
-  font-weight: 650; text-decoration: underline; text-underline-offset: .2em; cursor: pointer;
-}
-
 /* ---------- larger screens ---------- */
 @media (min-width: 820px) {
   body { font-size: 1.075rem; }
@@ -409,7 +373,7 @@ dialog::backdrop { background: rgba(18, 22, 20, .6); }
 }
 
 @media (forced-colors: active) {
-  .btn, .lang a, .copy-btn, .lb-btn, .icon-btn { border: 2px solid ButtonText; }
+  .btn, .lang a, .copy-btn, .lb-btn { border: 2px solid ButtonText; }
 }
 
 @media print {

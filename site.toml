@@ -67,7 +67,7 @@ name      = { en = "Bob", he = "בוב" }
 sex       = "male"                           # male | female
 accent    = "#A15B1C"                        # this dog's small colour accent
 born      = "2022-03-22"                     # YYYY-MM-DD — age is calculated automatically
-breed     = { en = "Labrador mix", he = "מעורב לברדור" }
+breed     = { en = "Labrador mix", he = "לברדור מעורב" }
 size      = { en = "Large", he = "גדול" }
 weight_kg = 34
 coat      = { en = "Brown", he = "חום" }
@@ -108,7 +108,7 @@ name      = { en = "Berry", he = "ברי" }
 sex       = "female"
 accent    = "#9A3E65"
 born      = "2022-03-22"
-breed     = { en = "Canaan dog mix", he = "מעורבת כנעני" }
+breed     = { en = "Canaan dog mix", he = "כנענית מעורבת" }
 size      = { en = "Large", he = "גדולה" }
 weight_kg = 24
 coat      = { en = "Brown", he = "חום" }
@@ -148,8 +148,8 @@ alerts = [
 # automatically:
 #   {name}  the dog (or "Bob and Berry" on the homepage)
 #   {to}    the person being contacted, e.g. Roy
-#   {owner} the owner's short name
-#   {n} {m} {i} {total} {date} {url} {place} {items}  numbers / values
+#   {owner} Roy's short name (the main contact)
+#   {n} {i} {total} {date} {items}  numbers / values
 # Hebrew variants: `he_f` is used instead of `he` when the subject is
 # female (the dog in dog sentences; the contact person in messages).
 
@@ -161,9 +161,9 @@ more_pages      = { en = "More pages", he = "עמודים נוספים" }
 eyebrow         = { en = "Help me get home", he = "עזרו לי לחזור הביתה" }
 greeting        = { en = "Hi, I'm {name}", he = "היי, אני {name}" }
 found_q         = { en = "Found me on my own?", he = "מצאתם אותי לבד?" }
-found_a         = { en = "Please contact my owner.", he = "בבקשה צרו קשר עם הבעלים שלי." }
+found_a         = { en = "Please contact my family.", he = "בבקשה צרו קשר עם המשפחה שלי." }
 thanks          = { en = "Thank you for helping me get home.", he = "תודה שאתם עוזרים לי לחזור הביתה." }
-owner_label     = { en = "My owner", he = "הבעלים שלי" }
+owner_label     = { en = "My father", he = "אבא שלי" }
 
 call            = { en = "Call {to}", he = "התקשרו ל{to}" }
 whatsapp        = { en = "WhatsApp {to}", he = "שלחו הודעה ל{to} בוואטסאפ" }
@@ -173,7 +173,6 @@ email           = { en = "Email {to}", he = "מייל ל{to}" }
 copy_number     = { en = "Copy number", he = "העתקת המספר" }
 copied          = { en = "Number copied.", he = "המספר הועתק." }
 copy_failed     = { en = "Couldn't copy automatically. The number is now selected — press and hold it to copy.", he = "ההעתקה האוטומטית לא הצליחה. המספר מסומן עכשיו — לחצו עליו לחיצה ארוכה כדי להעתיק." }
-share_location  = { en = "Share your location", he = "שיתוף המיקום שלכם" }
 more_contacts   = { en = "More contacts", he = "אנשי קשר נוספים" }
 quick_contact   = { en = "Quick contact", he = "יצירת קשר מהירה" }
 
@@ -181,9 +180,6 @@ quick_contact   = { en = "Quick contact", he = "יצירת קשר מהירה" }
 msg_found       = { en = "Hi {to}, I found {name}.", he = "היי {to}, מצאתי את {name}." }
 msg_where_blank = { en = "I'm at [type your location].", he = "המיקום שלי: [כתבו כאן איפה אתם]." }
 msg_contact_me  = { en = "Please contact me.", he = "בבקשה צור איתי קשר.", he_f = "בבקשה צרי איתי קשר." }
-msg_map         = { en = "My location on the map: {url}", he = "המיקום שלי במפה: {url}" }
-msg_accuracy    = { en = "(accurate to about {m} m)", he = "(דיוק של כ־{m} מטר)" }
-msg_place       = { en = "I'm near: {place}", he = "אני ליד: {place}" }
 email_subject   = { en = "I found {name}", he = "מצאתי את {name}" }
 
 alerts_title    = { en = "Important to know", he = "חשוב לדעת" }
@@ -191,9 +187,9 @@ alerts_title    = { en = "Important to know", he = "חשוב לדעת" }
 steps_title     = { en = "What to do if you found me", he = "מה לעשות אם מצאתם אותי" }
 step_contact    = { en = "Call {owner} or send a WhatsApp message using the buttons on this page.", he = "התקשרו ל{owner} או שלחו הודעת וואטסאפ בעזרת הכפתורים בעמוד." }
 step_call_only  = { en = "Call {owner} using the button on this page.", he = "התקשרו ל{owner} בעזרת הכפתור בעמוד." }
-step_where      = { en = "Tell {owner} where you are: share your location, or mention a street or landmark nearby.", he = "ספרו ל{owner} איפה אתם: שתפו מיקום, או ציינו רחוב או ציון דרך קרוב." }
+step_where      = { en = "Tell {owner} where you are — a street name or a landmark nearby helps.", he = "ספרו ל{owner} איפה אתם — שם רחוב או ציון דרך קרוב יעזרו." }
 step_calm       = { en = "Please stay calm and don't chase me. Don't take any risks, especially near roads.", he = "הישארו רגועים ואל תרדפו אחריי. אל תיקחו סיכונים, במיוחד ליד כבישים." }
-step_backup     = { en = "If {owner} doesn't answer, try {backup}, our backup contact.", he = "אם {owner} לא עונה, נסו את {backup}, איש הקשר הנוסף שלנו." }
+step_backup     = { en = "If {owner} doesn't answer, please try {backup}.", he = "אם {owner} לא עונה, נסו ליצור קשר עם {backup}." }
 
 gallery_title   = { en = "Photos of {name}", he = "תמונות של {name}" }
 gallery_hint    = { en = "Tap a photo to see it larger.", he = "הקישו על תמונה כדי להגדיל אותה." }
@@ -228,8 +224,8 @@ age_n           = { en = "{n} years old", he = "בן {n}", he_f = "בת {n}" }
 born_on         = { en = "born {date}", he = "נולד ב־{date}", he_f = "נולדה ב־{date}" }
 
 contacts_title  = { en = "Contact", he = "יצירת קשר" }
-role_owner      = { en = "Owner", he = "הבעלים" }
-role_backup     = { en = "Backup contact", he = "איש קשר נוסף" }
+role_owner      = { en = "Father", he = "אבא" }
+role_backup     = { en = "Mother", he = "אמא" }
 btn_call        = { en = "Call", he = "התקשרו" }
 btn_whatsapp    = { en = "WhatsApp", he = "וואטסאפ" }
 btn_sms         = { en = "SMS", he = "SMS" }
@@ -237,34 +233,12 @@ btn_email       = { en = "Email", he = "מייל" }
 btn_copy        = { en = "Copy", he = "העתקה" }
 
 other_dog       = { en = "Also meet {name}", he = "הכירו גם את {name}" }
-privacy_note    = { en = "This page has no tracking or ads. Your location is shared only if you choose to send it yourself.", he = "בעמוד הזה אין מעקב או פרסומות. המיקום שלכם משותף רק אם תבחרו לשלוח אותו בעצמכם." }
-
-# Location sheet
-loc_title       = { en = "Share your location with {owner}", he = "שיתוף המיקום שלכם עם {owner}" }
-loc_intro       = { en = "Your phone will ask for permission. A map link is added to a message that you can check and edit, and then send yourself. Your location is not sent to this website.", he = "הטלפון יבקש אישור. קישור למפה יתווסף להודעה שתוכלו לבדוק ולערוך, ואז לשלוח בעצמכם. המיקום לא נשלח לאתר הזה." }
-loc_get         = { en = "Add my current location", he = "הוספת המיקום הנוכחי שלי" }
-loc_again       = { en = "Update my location", he = "עדכון המיקום" }
-loc_finding     = { en = "Finding your location…", he = "מאתרים את המיקום שלכם…" }
-loc_ok          = { en = "Your location was added to the message below.", he = "המיקום נוסף להודעה למטה." }
-loc_rough       = { en = "Your location may be off by about {m} m. Please add a street name or landmark too.", he = "ייתכן שהמיקום לא מדויק (עד כ־{m} מטר). כדאי להוסיף גם שם רחוב או ציון דרך." }
-loc_denied      = { en = "Location access is blocked. You can type where you are instead, or simply call.", he = "הגישה למיקום חסומה. אפשר לכתוב איפה אתם במקום, או פשוט להתקשר." }
-loc_unavailable = { en = "Your location couldn't be found right now. Please type where you are.", he = "לא הצלחנו למצוא את המיקום כרגע. כתבו בבקשה איפה אתם." }
-loc_timeout     = { en = "Finding your location took too long. Try again, or type where you are.", he = "איתור המיקום לקח יותר מדי זמן. נסו שוב, או כתבו איפה אתם." }
-loc_unsupported = { en = "This browser can't share your location. Please type where you are.", he = "הדפדפן הזה לא יכול לשתף מיקום. כתבו בבקשה איפה אתם." }
-loc_place_label = { en = "Street, landmark or place (optional)", he = "רחוב, ציון דרך או מקום (לא חובה)" }
-loc_place_hint  = { en = "e.g. next to the bus stop on …", he = "למשל: ליד תחנת האוטובוס ברחוב…" }
-loc_msg_label   = { en = "Your message — you can edit it", he = "ההודעה שלכם — אפשר לערוך אותה" }
-loc_reset       = { en = "Start the message again", he = "התחלת ההודעה מחדש" }
-loc_send_wa     = { en = "Open in WhatsApp", he = "פתיחה בוואטסאפ" }
-loc_send_sms    = { en = "Open as SMS", he = "פתיחה כהודעת SMS" }
-loc_copy        = { en = "Copy message", he = "העתקת ההודעה" }
-loc_copied      = { en = "Message copied.", he = "ההודעה הועתקה." }
-loc_note        = { en = "Nothing is sent until you press Send in WhatsApp or Messages.", he = "שום דבר לא נשלח עד שתלחצו על ״שליחה״ בוואטסאפ או בהודעות." }
+privacy_note    = { en = "This page has no tracking or ads, and never collects your location.", he = "בעמוד הזה אין מעקב או פרסומות, והוא לא אוסף את המיקום שלכם." }
 
 # Homepage
 home_eyebrow    = { en = "Help us get home", he = "עזרו לנו לחזור הביתה" }
 home_found_q    = { en = "Found one of us, or both?", he = "מצאתם אחד מאיתנו, או את שנינו?" }
-home_found_a    = { en = "Please contact our owner, {owner}.", he = "בבקשה צרו קשר עם {owner}, הבעלים שלנו." }
+home_found_a    = { en = "Please contact our family.", he = "בבקשה צרו קשר עם המשפחה שלנו." }
 home_thanks     = { en = "Thank you for helping us get home.", he = "תודה שאתם עוזרים לנו לחזור הביתה." }
 home_who        = { en = "Who did you find?", he = "את מי מצאתם?" }
 home_card_link  = { en = "{name}'s page", he = "העמוד של {name}" }

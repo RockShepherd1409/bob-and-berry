@@ -33,7 +33,8 @@ Requirements: Python 3.11+ and Pillow (`python -m pip install pillow`, once).
 To preview locally: `python -m http.server 8000 --directory public`, then open
 <http://localhost:8000/bob/>.
 
-**Change a phone number** — `[owner]` → `phone`, `phone_display`, `whatsapp`.
+**Change a phone number** — `[owner]` (Roy, shown as "Father") or `[backup]`
+(Yana, shown as "Mother") → `phone`, `phone_display`, `whatsapp`.
 Always international format (`+972-54-…`). Empty `whatsapp` hides the WhatsApp
 buttons; empty `email` hides email.
 
@@ -105,8 +106,7 @@ Verified during development (local preview, Chrome engine, emulated phone sizes)
       browser-language default, phone numbers stay left-to-right in Hebrew.
 - [x] Lightbox: swipe/arrows/keyboard, counter, close, focus returns;
       broken photos show a neutral placeholder; contact still works.
-- [x] Location: success, inaccurate, denied, timeout, unsupported — all handled;
-      nothing is sent anywhere; no "sent" message is ever shown.
+- [x] No location requests and no tracking; no "sent" message is ever shown.
 - [x] Missing essentials show a red preview banner and disabled buttons.
 - [x] Works without JavaScript; 320 px wide; text enlarged to 200 %; keyboard.
 - [x] Published photos contain no metadata; QR codes decode correctly.
@@ -116,8 +116,7 @@ Still needs a real phone (please do these yourself):
 - [ ] Publish, then open both URLs over mobile data on an iPhone (Safari) and an
       Android phone (Chrome).
 - [ ] On both: tap **Call**, **WhatsApp** (message pre-filled, you press Send),
-      **SMS** (body pre-filled), **Share your location** (permission prompt,
-      map link in the message).
+      **SMS** (body pre-filled), **Email**, **Copy number**.
 - [ ] Write the tags, scan each with both phones **while on the collar**
       (metal parts can weaken NFC), confirm the right dog opens.
 - [ ] Scan the printed QR codes with a phone camera.

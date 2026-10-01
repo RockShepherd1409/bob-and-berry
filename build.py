@@ -48,7 +48,6 @@ _STROKE = {
     "sms": '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
     "mail": '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
     "copy": '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
-    "pin": '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
     "users": '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
     "x": '<path d="M18 6 6 18M6 6l12 12"/>',
     "left": '<path d="m15 18-6-6 6-6"/>',
@@ -533,9 +532,7 @@ def hero_contact(pg, names):
 
 def more_actions(pg, names):
     o = pg.m["owner"]
-    loc = (f'<button type="button" class="btn btn-soft span-2" data-open-locate hidden>{icon("pin")}'
-           f'{pg.tx(pg.u("share_location"))}</button>') if o and (o["wa"] or o["tel"]) else ""
-    return (f'<div class="more-actions">{loc}{sms_button(pg, o, names)}'
+    return (f'<div class="more-actions">{sms_button(pg, o, names)}'
             f'<a class="btn btn-soft" href="#contacts">{icon("users")}{pg.tx(pg.u("more_contacts"))}</a></div>')
 
 
@@ -572,43 +569,7 @@ def sticky_bar(pg, names):
             f'{call_button(pg, o)}{wa_button(pg, o, names, label="whatsapp_short")}</div></div>')
 
 
-def location_sheet(pg, names):
-    o = pg.m["owner"]
-    if not o or not (o["wa"] or o["tel"]):
-        return ""
-    for k in ("msg_found", "msg_where_blank", "msg_map", "msg_accuracy", "msg_place", "loc_get", "loc_again",
-              "loc_finding", "loc_ok", "loc_rough", "loc_denied", "loc_unavailable", "loc_timeout",
-              "loc_unsupported", "loc_copied"):
-        pg.expose(k)
-    wa = (f'<a class="btn btn-wa" id="loc-wa" href="#" target="_blank" rel="noopener">{icon("whatsapp")}'
-          f'{pg.tx(pg.u("loc_send_wa"))}</a>') if o["wa"] else ""
-    return f'''<dialog id="bb-locate" class="sheet" aria-labelledby="loc-title"><div class="sheet-inner">
-<div class="sheet-head"><h2 id="loc-title">{pg.tx(pg.u("loc_title", owner=o["short"]))}</h2>
-<button type="button" class="icon-btn" data-close>{icon("x")}{pg.tx(pg.u("close"))}</button></div>
-{pg.tx(pg.u("loc_intro"), tag="p", cls="muted")}
-<button type="button" class="btn btn-call" id="loc-get">{icon("pin")}<span id="loc-get-label">{esc(pg.u("loc_get")["en"])}</span></button>
-<p id="loc-status" class="loc-status" role="status" aria-live="polite"></p>
-<div class="field"><label for="loc-place">{pg.tx(pg.u("loc_place_label"))}</label>
-<input id="loc-place" type="text" autocomplete="off" enterkeyhint="done" dir="auto"{pg.at(placeholder=pg.u("loc_place_hint"))}></div>
-<div class="field"><label for="loc-msg">{pg.tx(pg.u("loc_msg_label"))}</label>
-<textarea id="loc-msg" rows="6" dir="auto" spellcheck="false"></textarea></div>
-<button type="button" class="text-btn" id="loc-reset" hidden>{pg.tx(pg.u("loc_reset"))}</button>
-<div class="sheet-actions">{wa}
-<a class="btn btn-soft" id="loc-sms" href="#">{icon("sms")}{pg.tx(pg.u("loc_send_sms"))}</a>
-<button type="button" class="btn btn-soft" id="loc-copy">{icon("copy")}{pg.tx(pg.u("loc_copy"))}</button></div>
-{pg.tx(pg.u("loc_note"), tag="p", cls="fine")}
-</div></dialog>'''
-
-
-def page_data(pg, names):
-    o = pg.m["owner"]
-    if not o:
-        return {}
-    return {"names": names, "contact": {"wa": o["wa"], "sms": "+" + o["tel"] if o["tel"] else "",
-                                        "short": o["short"], "contactMe": pg.u("msg_contact_me", fem=o["fem"])}}
-
-
-def document(pg, *, title, description, body, accent=None, og_image=None, canonical=None, data=None, assets):
+def document(pg, *, title, description, body, accent=None, og_image=None, canonical=None, assets):
     P = pg.P
     pg.key(title, "title")
     pg.expose("copied", "copy_failed", "photo_counter")
@@ -625,7 +586,6 @@ def document(pg, *, title, description, body, accent=None, og_image=None, canoni
         items = ", ".join(pg.m["_missing"])
         banner = f'<div class="preview-banner" role="alert">{pg.tx(pg.u("preview_banner", items=items))}</div>'
     i18n = json.dumps(pg.d, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    pdata = json.dumps(data or {}, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     return f'''<!doctype html>
 <html lang="en" dir="ltr">
 <head>
@@ -646,7 +606,6 @@ def document(pg, *, title, description, body, accent=None, og_image=None, canoni
 {banner}{body}
 <div id="bb-toast" class="toast" role="status" aria-live="polite"></div>
 <script type="application/json" id="bb-i18n">{i18n}</script>
-<script type="application/json" id="bb-page">{pdata}</script>
 <script>{APPLY_JS}</script>
 <script src="{P}assets/app.js?v={assets["js"]}" defer></script>
 </body>
@@ -777,13 +736,13 @@ def dog_page(model, dog, assets):
 
     body = (f'{topbar(pg, P)}\n<main id="main" class="wrap">\n{hero}\n{alerts}\n'
             f'<div class="two-col-wrap two-col">{steps_html}{about}</div>\n{gallery}\n{contacts_section(pg, name)}\n</main>\n'
-            f'{footer}\n{sticky_bar(pg, name)}\n{lightbox(pg, name)}\n{location_sheet(pg, name)}')
+            f'{footer}\n{sticky_bar(pg, name)}\n{lightbox(pg, name)}')
     base = model["base_url"]
     og = f'{base}/{main_photo["variants"][min(1, len(main_photo["variants"]) - 1)]["jpg"]}' if base and main_photo else None
     return document(pg, title=u("page_title", name=name),
                     description=f'{u("found_q")["en"]} {u("found_a")["en"]} · {u("found_q")["he"]} {u("found_a")["he"]}',
                     body=body, accent=(dog["accent"], dog["accent_soft"]), og_image=og,
-                    canonical=f"{base}/{dog['slug']}/" if base else None, data=page_data(pg, name), assets=assets)
+                    canonical=f"{base}/{dog['slug']}/" if base else None, assets=assets)
 
 
 def lightbox(pg, name):
@@ -846,7 +805,7 @@ def home_page(model, assets, not_found=False):
     footer = (f'<footer class="site-footer wrap"><div class="paws" aria-hidden="true"></div>'
               f'{pg.tx(u("privacy_note"), tag="p", cls="fine")}</footer>')
     body = (f'{topbar(pg, prefix or "./")}\n<main id="main" class="wrap">\n{hero}\n{who}\n{contacts_section(pg, names)}\n</main>\n'
-            f'{footer}\n{sticky_bar(pg, names)}\n{location_sheet(pg, names)}')
+            f'{footer}\n{sticky_bar(pg, names)}')
     base = model["base_url"]
     og = None
     if base and model["dogs"] and model["dogs"][0]["photos"]:
@@ -854,7 +813,7 @@ def home_page(model, assets, not_found=False):
     return document(pg, title=title,
                     description=f'{u("home_found_q")["en"]} · {u("home_found_q")["he"]}',
                     body=body, og_image=og, canonical=(f"{base}/" if base and not not_found else None),
-                    data=page_data(pg, names), assets=assets)
+                    assets=assets)
 
 
 # ═══════════════════════════════════════════════════════════ collar kit
@@ -934,7 +893,7 @@ HEADERS = """# Response headers for Cloudflare Pages / Netlify (ignored by GitHu
   X-Robots-Tag: noindex, nofollow, noarchive
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(self), camera=(), microphone=(), payment=()
+  Permissions-Policy: geolocation=(), camera=(), microphone=(), payment=()
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

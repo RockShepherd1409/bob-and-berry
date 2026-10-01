@@ -259,21 +259,22 @@ button { font: inherit; }
   color: var(--teal); font-weight: 750; font-size: .9rem; text-transform: uppercase; letter-spacing: .06em;
 }
 [lang="he"] .home-hero .eyebrow { text-transform: none; letter-spacing: 0; font-size: 1rem; }
-.home-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.home-title-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 .avatars { display: flex; flex: none; }
 .avatars img {
   width: 64px; height: 64px; border-radius: 50%; object-fit: cover;
   border: 3px solid var(--accent); box-shadow: 0 0 0 3px var(--bg), var(--shadow);
 }
 .avatars img + img { margin-inline-start: -14px; }
-.dog-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+/* two cards side by side; one per row when enlarged text no longer fits */
+.dog-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8em), 1fr)); gap: 12px; }
 .dog-card {
   display: flex; flex-direction: column; height: 100%; background: var(--surface); border-radius: var(--radius);
   box-shadow: var(--shadow); overflow: hidden; color: var(--ink); text-decoration: none;
   border-top: 5px solid var(--accent);
 }
 .dog-card .ph { aspect-ratio: 4 / 5; }
-.dog-card-body { display: grid; gap: 2px; padding: 12px 14px 14px; }
+.dog-card-body { display: grid; gap: 2px; padding: 12px 14px 14px; overflow-wrap: anywhere; }
 .dog-card-name { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; color: var(--accent); }
 .dog-card-meta { color: var(--ink-2); font-size: .9rem; }
 .dog-card-link { margin-top: 6px; font-weight: 700; color: var(--teal-ink); display: inline-flex; align-items: center; gap: 4px; }

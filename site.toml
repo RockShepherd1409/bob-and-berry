@@ -163,7 +163,6 @@ greeting        = { en = "Hi, I'm {name}", he = "היי, אני {name}" }
 found_q         = { en = "Found me on my own?", he = "מצאתם אותי לבד?" }
 found_a         = { en = "Please contact my family.", he = "בבקשה צרו קשר עם המשפחה שלי." }
 thanks          = { en = "Thank you for helping me get home.", he = "תודה שאתם עוזרים לי לחזור הביתה." }
-owner_label     = { en = "My father", he = "אבא שלי" }
 
 call            = { en = "Call {to}", he = "התקשרו ל{to}" }
 whatsapp        = { en = "WhatsApp {to}", he = "שלחו הודעה ל{to} בוואטסאפ" }
@@ -173,7 +172,7 @@ email           = { en = "Email {to}", he = "מייל ל{to}" }
 copy_number     = { en = "Copy number", he = "העתקת המספר" }
 copied          = { en = "Number copied.", he = "המספר הועתק." }
 copy_failed     = { en = "Couldn't copy automatically. The number is now selected — press and hold it to copy.", he = "ההעתקה האוטומטית לא הצליחה. המספר מסומן עכשיו — לחצו עליו לחיצה ארוכה כדי להעתיק." }
-more_contacts   = { en = "More contacts", he = "אנשי קשר נוספים" }
+all_contacts    = { en = "All contact details", he = "כל פרטי הקשר" }
 quick_contact   = { en = "Quick contact", he = "יצירת קשר מהירה" }
 
 # Messages the finder can edit before sending (WhatsApp / SMS / email)
@@ -185,11 +184,11 @@ email_subject   = { en = "I found {name}", he = "מצאתי את {name}" }
 alerts_title    = { en = "Important to know", he = "חשוב לדעת" }
 
 steps_title     = { en = "What to do if you found me", he = "מה לעשות אם מצאתם אותי" }
-step_contact    = { en = "Call {owner} or send a WhatsApp message using the buttons on this page.", he = "התקשרו ל{owner} או שלחו הודעת וואטסאפ בעזרת הכפתורים בעמוד." }
-step_call_only  = { en = "Call {owner} using the button on this page.", he = "התקשרו ל{owner} בעזרת הכפתור בעמוד." }
-step_where      = { en = "Tell {owner} where you are — a street name or a landmark nearby helps.", he = "ספרו ל{owner} איפה אתם — שם רחוב או ציון דרך קרוב יעזרו." }
+step_contact    = { en = "Call or message {owner} using the buttons on this page.", he = "התקשרו או שלחו הודעה ל{owner} בעזרת הכפתורים בעמוד." }
+step_contact_two = { en = "Call or message {owner} or {backup} using the buttons on this page.", he = "התקשרו או שלחו הודעה ל{owner} או ל{backup} בעזרת הכפתורים בעמוד." }
+step_other      = { en = "If one of them doesn't answer, please try the other number.", he = "אם אחד מהם לא עונה, נסו את המספר השני." }
+step_where      = { en = "Tell my family where you are — a street name or a landmark nearby helps.", he = "ספרו למשפחה שלי איפה אתם — שם רחוב או ציון דרך קרוב יעזרו." }
 step_calm       = { en = "Please stay calm and don't chase me. Don't take any risks, especially near roads.", he = "הישארו רגועים ואל תרדפו אחריי. אל תיקחו סיכונים, במיוחד ליד כבישים." }
-step_backup     = { en = "If {owner} doesn't answer, please try {backup}.", he = "אם {owner} לא עונה, נסו ליצור קשר עם {backup}." }
 
 gallery_title   = { en = "Photos of {name}", he = "תמונות של {name}" }
 gallery_hint    = { en = "Tap a photo to see it larger.", he = "הקישו על תמונה כדי להגדיל אותה." }
@@ -246,7 +245,7 @@ and_joiner      = { en = "and", he = "ואת" }       # "Bob and Berry" / "בו�
 
 # Not-found page
 nf_title        = { en = "This page doesn't exist", he = "העמוד הזה לא קיים" }
-nf_text         = { en = "Found one of our dogs? You can still contact {owner} right away:", he = "מצאתם אחד מהכלבים שלנו? אפשר ליצור קשר עם {owner} מיד:" }
+nf_text         = { en = "Found one of our dogs? You can still contact our family right away:", he = "מצאתם אחד מהכלבים שלנו? אפשר ליצור קשר עם המשפחה שלנו מיד:" }
 
 # Shown only while something essential is missing from this file
 preview_banner  = { en = "Preview — not ready for collar use. Missing: {items}", he = "תצוגה מקדימה — עדיין לא מוכן לשימוש בקולר. חסר: {items}" }

@@ -12,6 +12,8 @@
   --teal-soft: #e5efeb;
   --wa: #1c7a46;
   --wa-ink: #145d35;
+  --sms: #35506c;
+  --sms-ink: #263b52;
   --warm-soft: #fff6e8;
   --warm-line: #ecd1a3;
   --warm-ink: #7a4a10;
@@ -21,7 +23,7 @@
   --radius: 22px;
   --radius-sm: 14px;
   --shadow: 0 1px 2px rgba(70, 50, 30, .06), 0 10px 28px rgba(70, 50, 30, .08);
-  --bar-h: calc(76px + env(safe-area-inset-bottom, 0px)); /* measured by app.js */
+  --bar-h: calc(96px + env(safe-area-inset-bottom, 0px)); /* measured by app.js */
   --font: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Hebrew", "Noto Sans", Arial, sans-serif;
   --font-display: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Hebrew", Arial, sans-serif;
   color-scheme: light;
@@ -113,8 +115,8 @@ button { font: inherit; }
 .hero { display: grid; gap: 16px; margin-top: 4px; }
 .hero-photo {
   border-radius: var(--radius); box-shadow: var(--shadow);
-  height: clamp(190px, 36vh, 420px);
-  height: clamp(190px, 36svh, 420px);
+  height: clamp(160px, 28vh, 420px);
+  height: clamp(160px, 28svh, 420px);
 }
 .hero-badge {
   position: absolute; inset-inline-start: 12px; bottom: 12px;
@@ -133,7 +135,19 @@ button { font: inherit; }
 .thanks .icon { color: var(--accent); width: 1.1em; height: 1.1em; }
 
 /* ---------- buttons ---------- */
-.actions { display: grid; gap: 10px; margin-top: 4px; }
+/* one block per family member: role · name · number, then two buttons */
+.actions { display: grid; gap: 14px; margin-top: 4px; }
+.cp { display: grid; gap: 6px; }
+.cp-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; font-size: 1rem; color: var(--ink-2); }
+.cp-role { font-size: .8rem; font-weight: 750; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; }
+[lang="he"] .cp-role { font-size: .95rem; text-transform: none; letter-spacing: 0; }
+.cp-label strong { color: var(--ink); font-weight: 650; }
+/* number at the far end of the line (the number itself is LTR, so use physical sides) */
+.cp-label .num { margin-left: auto; }
+[dir="rtl"] .cp-label .num { margin-left: 0; margin-right: auto; }
+.cp-btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 7.5em), 1fr)); gap: 8px; }
+.cp-btns .btn { min-height: 54px; font-size: 1rem; padding: 8px 8px; gap: 7px; }
+.cp-btns .btn .icon { width: 1.35em; height: 1.35em; }
 .btn {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 56px; padding: 10px 18px; border-radius: 16px; border: 0; cursor: pointer;
@@ -147,6 +161,8 @@ button { font: inherit; }
 .btn-call:hover { background: var(--teal-ink); }
 .btn-wa { background: var(--wa); color: #fff; }
 .btn-wa:hover { background: var(--wa-ink); }
+.btn-sms { background: var(--sms); color: #fff; }
+.btn-sms:hover { background: var(--sms-ink); }
 .btn-soft {
   background: var(--surface); color: var(--ink); border: 1.5px solid var(--line);
   min-height: 50px; font-size: 1rem; font-weight: 650; box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
@@ -156,22 +172,10 @@ button { font: inherit; }
 .btn.is-disabled { background: #e9e5df; color: #5d5750; cursor: not-allowed; border: 2px dashed #b9afa2; }
 .btn .icon { width: 1.45em; height: 1.45em; }
 
-.owner-line {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px;
-  font-size: 1rem; color: var(--ink-2);
-}
-.owner-line strong { color: var(--ink); font-weight: 650; }
 .num {
   font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: .01em;
   -webkit-user-select: all; user-select: all;
 }
-.copy-btn {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px;
-  background: transparent; border: 1.5px solid var(--line); border-radius: 999px; color: var(--teal-ink);
-  font-weight: 650; font-size: .92rem; cursor: pointer;
-}
-.copy-btn .icon { width: 1.1em; height: 1.1em; }
-.copy-btn:hover { background: var(--teal-soft); }
 
 .more-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr)); gap: 10px; margin-top: 6px; }
 
@@ -298,8 +302,23 @@ button { font: inherit; }
   .sticky-bar { background: rgba(250, 247, 242, .88); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); }
 }
 /* side by side normally; stacked when enlarged text no longer fits */
-.sticky-inner { max-width: 620px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 7em), 1fr)); gap: 8px 10px; }
-.sticky-bar .btn { min-height: 52px; font-size: 1.02rem; padding: 8px 10px; border-radius: 14px; }
+/* one group per family member, side by side; stacked when enlarged text no longer fits */
+.sticky-inner { max-width: 620px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8em), 1fr)); gap: 6px 12px; }
+.sb-person { display: grid; gap: 4px; min-width: 0; }
+.sb-name { font-size: .8rem; font-weight: 700; color: var(--ink-2); text-align: center; }
+.sb-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.sb-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-height: 52px; padding: 6px 2px; border-radius: 12px; color: #fff; text-decoration: none;
+  font-weight: 700; font-size: .8rem; line-height: 1.1; text-align: center; overflow-wrap: anywhere;
+  -webkit-tap-highlight-color: transparent;
+}
+.sb-btn .icon { width: 1.5rem; height: 1.5rem; }
+.sb-btn:active { transform: scale(.97); }
+.sb-call { background: var(--teal); }
+.sb-wa { background: var(--wa); }
+.sb-sms { background: var(--sms); }
+.sb-btn.is-disabled { color: #5d5750; }
 .js .sticky-bar:not(.is-shown) { transform: translateY(calc(100% + 12px)); visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; }
 
 /* ---------- status toast ---------- */
@@ -373,7 +392,7 @@ dialog::backdrop { background: rgba(18, 22, 20, .6); }
 }
 
 @media (forced-colors: active) {
-  .btn, .lang a, .copy-btn, .lb-btn { border: 2px solid ButtonText; }
+  .btn, .lang a, .lb-btn, .sb-btn { border: 2px solid ButtonText; }
 }
 
 @media print {

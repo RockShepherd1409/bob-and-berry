@@ -517,22 +517,41 @@ def email_button(pg, c, names, cls="btn btn-soft"):
     return link_button(pg, c, href=href, icon_name="mail", label="btn_email", cls=cls, aria="email")
 
 
+def family(pg):
+    """(role label, contact) for Father then Mother — everyone shown on every page.
+    The main contact is always listed (a missing phone shows a disabled button);
+    the second contact only when they have a phone number."""
+    people = [("role_owner", pg.m["owner"])]
+    b = pg.m["backup"]
+    if b and b["tel"]:
+        people.append(("role_backup", b))
+    return people
+
+
+def second_button(pg, c, names, **kw):
+    """WhatsApp when the person has it, otherwise SMS."""
+    if c["wa"]:
+        return wa_button(pg, c, names, **kw.get("wa", {}))
+    return sms_button(pg, c, names, **kw.get("sms", {}))
+
+
 def hero_contact(pg, names):
-    """Primary buttons + owner name and number, shared by every page."""
-    o = pg.m["owner"]
-    num = ""
-    if o and o["tel"]:
-        num = (f'<span class="num ltr" dir="ltr" id="owner-num">{esc(o["disp"])}</span>'
-               f'<button type="button" class="copy-btn" data-copy="{esc(o["intl"])}" data-copy-target="owner-num" hidden>'
-               f'{icon("copy")}{pg.tx(pg.u("copy_number"))}</button>')
-    return (f'<div class="actions" id="contact-actions">{call_button(pg, o)}{wa_button(pg, o, names)}</div>'
-            f'<p class="owner-line"><span>{pg.tx(pg.u("owner_label"))}:</span> <strong>{pg.tx(o["name"]) if o else ""}</strong> {num}</p>')
+    """One block per family member: role, name, number, Call + WhatsApp (or SMS)."""
+    blocks = []
+    for role, c in family(pg):
+        num = f'<span class="num ltr" dir="ltr">{esc(c["disp"])}</span>' if c["tel"] else ""
+        second = second_button(pg, c, names, wa={"label": "whatsapp_short"}, sms={"label": "sms", "cls": "btn btn-sms"})
+        blocks.append(f'<div class="cp"><p class="cp-label">{pg.tx(pg.u(role), cls="cp-role")}'
+                      f'<strong>{pg.tx(c["name"])}</strong>{num}</p>'
+                      f'<div class="cp-btns">{call_button(pg, c)}{second}</div></div>')
+    return f'<div class="actions" id="contact-actions">{"".join(blocks)}</div>'
 
 
 def more_actions(pg, names):
-    o = pg.m["owner"]
-    return (f'<div class="more-actions">{sms_button(pg, o, names)}'
-            f'<a class="btn btn-soft" href="#contacts">{icon("users")}{pg.tx(pg.u("more_contacts"))}</a></div>')
+    # SMS for anyone whose main buttons are Call + WhatsApp (the others already have SMS)
+    sms = "".join(sms_button(pg, c, names) for _, c in family(pg) if c["wa"] and c["tel"])
+    return (f'<div class="more-actions">{sms}'
+            f'<a class="btn btn-soft" href="#contacts">{icon("users")}{pg.tx(pg.u("all_contacts"))}</a></div>')
 
 
 def contacts_section(pg, names):
@@ -563,9 +582,19 @@ def contacts_section(pg, names):
 
 
 def sticky_bar(pg, names):
-    o = pg.m["owner"]
-    return (f'<div class="sticky-bar" role="region"{pg.at(aria_label=pg.u("quick_contact"))}><div class="sticky-inner">'
-            f'{call_button(pg, o)}{wa_button(pg, o, names, label="whatsapp_short")}</div></div>')
+    """Bottom bar: a compact Call + WhatsApp/SMS pair for each family member."""
+    groups = []
+    for i, (role, c) in enumerate(family(pg)):
+        call = call_button(pg, c, label="btn_call", cls="sb-btn sb-call", aria="call")
+        second = second_button(pg, c, names,
+                               wa={"label": "btn_whatsapp", "cls": "sb-btn sb-wa", "aria": "whatsapp"},
+                               sms={"label": "btn_sms", "cls": "sb-btn sb-sms", "aria": "sms"})
+        name_id = f"sb-name-{i}"
+        label = pg.tx(join(pg.u(role), c["short"], sep=" · "), tag="p", cls="sb-name", extra=f' id="{name_id}"')
+        groups.append(f'<div class="sb-person" role="group" aria-labelledby="{name_id}">{label}'
+                      f'<div class="sb-btns">{call}{second}</div></div>')
+    return (f'<div class="sticky-bar" role="region"{pg.at(aria_label=pg.u("quick_contact"))}>'
+            f'<div class="sticky-inner">{"".join(groups)}</div></div>')
 
 
 def document(pg, *, title, description, body, accent=None, og_image=None, canonical=None, assets):
@@ -664,9 +693,12 @@ def dog_page(model, dog, assets):
                   f'{pg.tx(u("alerts_title"))}</h2><ul>{"".join(pg.tx(a, tag="li") for a in notes)}</ul></section>')
 
     # --- what to do
-    steps = [u("step_contact" if o and o["wa"] else "step_call_only", owner=o["short"]), u("step_where", owner=o["short"]), u("step_calm")]
-    if model["backup"]:
-        steps.append(u("step_backup", owner=o["short"], backup=model["backup"]["short"]))
+    people = family(pg)
+    if len(people) > 1:
+        steps = [u("step_contact_two", owner=o["short"], backup=people[1][1]["short"]), u("step_other")]
+    else:
+        steps = [u("step_contact", owner=o["short"])]
+    steps += [u("step_where"), u("step_calm")]
     steps_html = (f'<section class="section card" aria-labelledby="steps-title"><h2 id="steps-title">{icon("paw")}'
                   f'{pg.tx(u("steps_title"))}</h2><ol class="steps">{"".join(pg.tx(s, tag="li") for s in steps)}</ol></section>')
 
